@@ -1,18 +1,22 @@
 import { ethers } from "hardhat";
+import hre from "hardhat";
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+  const chain = hre.hardhatArguments.network;
 
-  const lockedAmount = ethers.utils.parseEther("1");
+  console.log("Running on chain: " + chain);
 
-  const Lock = await ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+  const contract = await ethers
+    .getContractFactory("Forecast")
+    .then((factory) => factory.deploy());
 
-  await lock.deployed();
-
-  console.log("Lock with 1 ETH deployed to:", lock.address);
+  console.log("Forecast contract deployed to " + contract.address);
+  console.log(
+    "Run to verify: npx hardhat verify --network " +
+      chain +
+      " " +
+      contract.address
+  );
 }
 
 // We recommend this pattern to be able to use async/await everywhere
