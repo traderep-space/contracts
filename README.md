@@ -2,7 +2,7 @@
 
 ## Contracts (Polygon Mumbai)
 
-- Forecast - 0xa6b7E5920392B03171bf72C39ffc749DaAeEd65D
+- Forecast - 0xf9822b4B26888129738be3B11052A7aeE090f3f0
 
 ## Commands
 

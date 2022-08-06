@@ -16,12 +16,15 @@ contract Forecast is ERC721URIStorage {
     mapping(address => uint256) internal _positiveReputations;
     mapping(address => uint256) internal _negativeReputations;
 
+    event URISet(uint256 indexed tokenId, string tokenURI);
+
+    event Verify(uint256 indexed tokenId, bool isTrue);
+
     event ReputationUpdate(
         address account,
         uint256 positiveReputation,
         uint256 negativeReputation
     );
-    event URISet(uint256 indexed tokenId, string tokenURI);
 
     constructor() ERC721("TradeRep Metabolism Forecast", "TRMF") {}
 
@@ -62,6 +65,8 @@ contract Forecast is ERC721URIStorage {
         // TODO: Implement real verifying
         // Assume that the forecast was true
         _verifiedForecasts[tokenId] = true;
+        emit Verify(tokenId, true);
+        // Update reputation
         _positiveReputations[_forecastAuthors[tokenId]] += 1;
         emit ReputationUpdate(
             _forecastAuthors[tokenId],
