@@ -21,22 +21,37 @@ contract Forecast is ERC721URIStorage {
         uint256 positiveReputation,
         uint256 negativeReputation
     );
+    event URISet(uint256 indexed tokenId, string tokenURI);
 
     constructor() ERC721("TradeRep Metabolism Forecast", "TRMF") {}
 
     /**
-     * Mint forecast.
+     * Mint forecast without token uri.
      */
-    function post(string memory tokenURI) public returns (uint256) {
+    function create() public returns (uint256) {
         // Mint token
         uint256 newItemId = _tokenIds.current();
         _mint(msg.sender, newItemId);
-        _setTokenURI(newItemId, tokenURI);
         // Save forecast author
         _forecastAuthors[newItemId] = msg.sender;
         // Update counter
         _tokenIds.increment();
         return newItemId;
+    }
+
+    /**
+     * Set URI.
+     */
+    function setURI(uint256 tokenId, string memory tknURI) public {
+        // Check that forecast doen't have token URI
+        require(
+            keccak256(abi.encodePacked(tokenURI(tokenId))) ==
+                keccak256(abi.encodePacked("")),
+            "Forecast already has token URI"
+        );
+        // Set URI
+        _setTokenURI(tokenId, tknURI);
+        emit URISet(tokenId, tknURI);
     }
 
     /**

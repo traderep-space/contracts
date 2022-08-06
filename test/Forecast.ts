@@ -1,4 +1,4 @@
-import { Contract, Signer } from "ethers";
+import { BigNumber, Contract, Signer } from "ethers";
 import { ethers } from "hardhat";
 import { expect } from "chai";
 
@@ -22,14 +22,24 @@ describe.only("Forecast", function () {
   it("Should mint multiple tokens to one account", async function () {
     await contract
       .connect(account1)
-      .post("ipfs://...")
+      .create()
       .then((tx: any) => tx.wait());
     await contract
       .connect(account1)
-      .post("ipfs://...")
+      .create()
       .then((tx: any) => tx.wait());
     let balance = await contract.balanceOf(await account1.getAddress());
     expect(balance).to.equal(2);
+  });
+
+  it("Should fail if forecast already has token URI", async function () {
+    await contract
+      .connect(account1)
+      .setURI("0", "ipfs://")
+      .then((tx: any) => tx.wait());
+    await expect(
+      contract.connect(account1).setURI("0", "ipfs://")
+    ).to.be.revertedWith("Forecast already has token URI");
   });
 
   it("Should verify forecast and change reputation", async function () {
