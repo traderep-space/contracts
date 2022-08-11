@@ -1,16 +1,21 @@
-# TradeRep Metabolism Contracts
+# TradeRep Contracts
 
-## Contracts (Polygon Mumbai)
+## Addresses (Polygon Mumbai)
 
-- Forecast - 0xf9822b4B26888129738be3B11052A7aeE090f3f0
+- Forecast - 0x377B7EEB5A5a31DCC14b4EB06E1E4f9EB2a37910
 
 ## Commands
 
+- Install dependencies: `npm install`
 - Compile contracts and generate TypeChain - `npx hardhat compile`
 - Run tests - `npx hardhat test`
 - Deploy contracts - `npx hardhat run scripts/deploy.ts --network mumbai`
+- Verify contract - `npx hardhat verify --network mumbai 0x377B7EEB5A5a31DCC14b4EB06E1E4f9EB2a37910`
 
-## Links
+## `.env` example
 
-- Solidity by Example - https://solidity-by-example.org/
-- OpenZeppelin ERC 721 - https://docs.openzeppelin.com/contracts/4.x/erc721
+```
+PRIVATE_KEY=
+RPC_URL_POLYGON_MUMBAI=
+ETHERSCAN_API_KEY_POLYGON_MUMBAI=
+```

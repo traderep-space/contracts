@@ -26,7 +26,7 @@ contract Forecast is ERC721URIStorage {
         uint256 negativeReputation
     );
 
-    constructor() ERC721("TradeRep Metabolism Forecast", "TRMF") {}
+    constructor() ERC721("TradeRep Forecast", "TRF") {}
 
     /**
      * Mint forecast without token uri.

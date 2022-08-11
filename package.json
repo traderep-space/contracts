@@ -1,12 +1,12 @@
 {
-  "name": "traderep-metabolism-contracts",
+  "name": "traderep-contracts",
   "version": "0.1.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/traderep-space/metabolism-contracts.git"
+    "url": "git+https://github.com/traderep-space/contracts.git"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^1.0.2",
