@@ -29,6 +29,15 @@ contract Forecast is ERC721URIStorage {
     constructor() ERC721("TradeRep Forecast", "TRF") {}
 
     /**
+     * Mint forecast with token uri.
+     */
+    function createWithURI(string memory tknURI) public returns (uint256) {
+        uint256 tokenId = create();
+        setURI(tokenId, tknURI);
+        return tokenId;
+    }
+
+    /**
      * Mint forecast without token uri.
      */
     function create() public returns (uint256) {
@@ -43,7 +52,7 @@ contract Forecast is ERC721URIStorage {
     }
 
     /**
-     * Set URI.
+     * Set uri.
      */
     function setURI(uint256 tokenId, string memory tknURI) public {
         // Check that forecast doen't have token URI

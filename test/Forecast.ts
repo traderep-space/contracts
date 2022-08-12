@@ -32,6 +32,20 @@ describe.only("Forecast", function () {
     expect(balance).to.equal(2);
   });
 
+  it.only("Should mint token with uri", async function () {
+    let balanceBefore: BigNumber = await contract.balanceOf(
+      await account1.getAddress()
+    );
+    await contract
+      .connect(account1)
+      .createWithURI("ipfs://")
+      .then((tx: any) => tx.wait());
+    let balanceAfter: BigNumber = await contract.balanceOf(
+      await account1.getAddress()
+    );
+    expect(balanceBefore.add(BigNumber.from(1))).to.equal(balanceAfter);
+  });
+
   it("Should fail if forecast already has token URI", async function () {
     await contract
       .connect(account1)
