@@ -2,7 +2,7 @@
 
 ## Addresses (Polygon Mumbai)
 
-- Forecast - 0xA6850A7B61a527B570EB6f5985D212230a4abd13
+- Forecast - 0xf4AE34F436e34e7c69440869fae22F5ec862c265
 
 ## Commands
 

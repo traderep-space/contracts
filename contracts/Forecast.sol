@@ -67,21 +67,38 @@ contract Forecast is ERC721URIStorage {
     }
 
     /**
-     * Verify that forecast is true or not true.
+     * Save verification results.
      */
-    function verify(uint256 tokenId) public {
-        require(!_verifiedForecasts[tokenId], "Forecast already verified");
-        // TODO: Implement real verifying
-        // Assume that the forecast was true
-        _verifiedForecasts[tokenId] = true;
-        emit Verify(tokenId, true);
-        // Update reputation
-        _positiveReputations[_forecastAuthors[tokenId]] += 1;
-        emit ReputationUpdate(
-            _forecastAuthors[tokenId],
-            _positiveReputations[msg.sender],
-            _negativeReputations[msg.sender]
+    function saveVerificationResults(
+        uint256[] memory tokenIds,
+        bool[] memory tokenVerificationResults
+    ) public {
+        // Check lengths
+        require(
+            tokenIds.length == tokenVerificationResults.length,
+            "Arrays have different lengths"
         );
+        for (uint256 i = 0; i < tokenIds.length; ++i) {
+            // Check forecast verification
+            require(
+                !_verifiedForecasts[tokenIds[i]],
+                "One of the forecast already verified"
+            );
+            // Save verification result
+            _verifiedForecasts[tokenIds[i]] = true;
+            emit Verify(tokenIds[i], tokenVerificationResults[i]);
+            // Update author reputation
+            if (tokenVerificationResults[i]) {
+                _positiveReputations[_forecastAuthors[tokenIds[i]]] += 1;
+            } else {
+                _negativeReputations[_forecastAuthors[tokenIds[i]]] += 1;
+            }
+            emit ReputationUpdate(
+                _forecastAuthors[tokenIds[i]],
+                _positiveReputations[msg.sender],
+                _negativeReputations[msg.sender]
+            );
+        }
     }
 
     /**

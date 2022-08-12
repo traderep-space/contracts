@@ -8,6 +8,8 @@ describe.only("Forecast", function () {
   let account2: Signer;
   // Contract
   let contract: Contract;
+  // Helpful variables
+  let forecastCounter = 0;
 
   before(async function () {
     // Init accounts
@@ -19,7 +21,7 @@ describe.only("Forecast", function () {
       .then((factory) => factory.deploy());
   });
 
-  it("Should mint multiple tokens to one account", async function () {
+  it("Should mint two tokens to one account", async function () {
     await contract
       .connect(account1)
       .create()
@@ -30,9 +32,10 @@ describe.only("Forecast", function () {
       .then((tx: any) => tx.wait());
     let balance = await contract.balanceOf(await account1.getAddress());
     expect(balance).to.equal(2);
+    forecastCounter += 2;
   });
 
-  it.only("Should mint token with uri", async function () {
+  it("Should mint token with uri", async function () {
     let balanceBefore: BigNumber = await contract.balanceOf(
       await account1.getAddress()
     );
@@ -44,6 +47,7 @@ describe.only("Forecast", function () {
       await account1.getAddress()
     );
     expect(balanceBefore.add(BigNumber.from(1))).to.equal(balanceAfter);
+    forecastCounter += 1;
   });
 
   it("Should fail if forecast already has token URI", async function () {
@@ -56,16 +60,16 @@ describe.only("Forecast", function () {
     ).to.be.revertedWith("Forecast already has token URI");
   });
 
-  it("Should verify forecast and change reputation", async function () {
-    await contract.verify(1);
+  it("Should save verification results and change reputation", async function () {
+    await contract.saveVerificationResults(["0", "1"], [true, false]);
     let reputation = await contract.getReputation(await account1.getAddress());
     expect(reputation[0]).to.equal(1);
-    expect(reputation[1]).to.equal(0);
+    expect(reputation[1]).to.equal(1);
   });
 
   it("Should fail if forecast already verified", async function () {
-    await expect(contract.verify(1)).to.be.revertedWith(
-      "Forecast already verified"
-    );
+    await expect(
+      contract.saveVerificationResults(["0"], [true])
+    ).to.be.revertedWith("One of the forecast already verified");
   });
 });
