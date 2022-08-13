@@ -1,9 +1,5 @@
 # TradeRep Contracts
 
-## Addresses (Polygon Mumbai)
-
-- Forecast - 0xf4AE34F436e34e7c69440869fae22F5ec862c265
-
 ## Commands
 
 - Install dependencies: `npm install`

@@ -2,7 +2,7 @@ import { BigNumber, Contract, Signer } from "ethers";
 import { ethers } from "hardhat";
 import { expect } from "chai";
 
-describe.only("Forecast", function () {
+describe("Forecast", function () {
   // Accounts
   let account1: Signer;
   let account2: Signer;
@@ -50,7 +50,7 @@ describe.only("Forecast", function () {
     forecastCounter += 1;
   });
 
-  it("Should fail if forecast already has token URI", async function () {
+  it("Should fail set URI if forecast already has token URI", async function () {
     await contract
       .connect(account1)
       .setURI("0", "ipfs://")
