@@ -4,6 +4,7 @@ import hre from "hardhat";
 const deployedContracts = {
   forecast: "0xf4AE34F436e34e7c69440869fae22F5ec862c265",
   bio: "0x5d776915F06958434E0C05eC75194FDC5f759548",
+  earlyAdopter: "0xC3Ce59992D266b0ADB985Bf6De78b2d5A3191beB",
 };
 
 async function main() {
@@ -19,12 +20,6 @@ async function main() {
       .then((factory) => factory.deploy());
 
     console.log("Forecast contract deployed to " + contract.address);
-    console.log(
-      "Run to verify: npx hardhat verify --network " +
-        chain +
-        " " +
-        contract.address
-    );
   }
 
   // Deploy bio contract
@@ -35,12 +30,19 @@ async function main() {
       .then((factory) => factory.deploy());
 
     console.log("Bio contract deployed to " + contract.address);
-    console.log(
-      "Run to verify: npx hardhat verify --network " +
-        chain +
-        " " +
-        contract.address
-    );
+  }
+
+  // Deploy early adopter contract
+  if (!deployedContracts.earlyAdopter) {
+    console.log("Start deploy early adopter contract");
+    const contract = await ethers
+      .getContractFactory("EarlyAdopter")
+      .then((factory) =>
+        factory.deploy(
+          "ipfs://bafybeiazag7zrndyjnhl4e7vml2lhxl26eexfwq44m4ottpihlb3mb5e5m/"
+        )
+      );
+    console.log("Early adopter deployed to " + contract.address);
   }
 }
 
