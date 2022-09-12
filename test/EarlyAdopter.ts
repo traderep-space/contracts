@@ -38,6 +38,14 @@ describe("EarlyAdopter", function () {
     expect(await contract.balanceOf(await account3.getAddress())).to.equal(1);
   });
 
+  it("Should fail if trying mint tokens by not owner", async function () {
+    await expect(
+      contract
+        .connect(account2)
+        .mint([await account2.getAddress(), await account3.getAddress()])
+    ).to.be.revertedWith("Ownable: caller is not the owner");
+  });
+
   it("Should fail if trying transfer token", async function () {
     await expect(
       contract
