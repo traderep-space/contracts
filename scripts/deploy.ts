@@ -7,6 +7,9 @@ const deployedContracts: any = {
     bio: "0x5d776915F06958434E0C05eC75194FDC5f759548",
     earlyAdopter: "0xC3Ce59992D266b0ADB985Bf6De78b2d5A3191beB",
   },
+  polygon: {
+    earlyAdopter: "0xd4640f498b2BB81D3a3c0c2Da0a2e46Aa3C2aA31",
+  },
 };
 
 async function main() {
@@ -22,33 +25,31 @@ async function main() {
   const chainDeployedContracts = deployedContracts[chain];
 
   // Deploy forecast contract
-  if (!deployedContracts.forecast) {
+  if (chainDeployedContracts.forecast === "") {
     console.log("Start deploy forecast contract");
     const contract = await ethers
       .getContractFactory("Forecast")
       .then((factory) => factory.deploy());
-
     console.log("Forecast contract deployed to " + contract.address);
   }
 
   // Deploy bio contract
-  if (!deployedContracts.bio) {
+  if (chainDeployedContracts.bio === "") {
     console.log("Start deploy bio contract");
     const contract = await ethers
       .getContractFactory("Bio")
       .then((factory) => factory.deploy());
-
     console.log("Bio contract deployed to " + contract.address);
   }
 
   // Deploy early adopter contract
-  if (!deployedContracts.earlyAdopter) {
+  if (chainDeployedContracts.earlyAdopter === "") {
     console.log("Start deploy early adopter contract");
     const contract = await ethers
       .getContractFactory("EarlyAdopter")
       .then((factory) =>
         factory.deploy(
-          "ipfs://bafybeiazag7zrndyjnhl4e7vml2lhxl26eexfwq44m4ottpihlb3mb5e5m/"
+          "ipfs://bafybeiggcvt6dnzwbhaxqy2g33mh2ms2nmo7knc3anhc24xr22qgr2bada/"
         )
       );
     console.log("Early adopter deployed to " + contract.address);
